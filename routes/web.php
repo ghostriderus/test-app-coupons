@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CouponController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::controller(CouponController::class)->group(function () {
+        Route::get('/coupons', 'index');
+        Route::get('/coupons/search', 'search');
+        Route::get('/coupons/{cid}', 'show');
+        Route::post('/coupons', 'store');
+    });
 });
 
 require __DIR__.'/auth.php';
